@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { FaHeart } from 'react-icons/fa';
 
+const APIEndPoint = "https://ad-performance-be.onrender.com";
 
 const Container = styled.div`
     min-height: 100vh;
@@ -92,7 +93,7 @@ const App = () => {
     const [file, setFile] = useState(null);
     const [analysis, setAnalysis] = useState(null);
     const [loading, setLoading] = useState(false);
-
+    
     const handleFileUpload = (e) => {
         setFile(e.target.files[0]);
     };
@@ -103,12 +104,12 @@ const App = () => {
 
         try {
             setLoading(true);
-            const uploadResponse = await axios.post('http://localhost:5000/upload', formData, {
+            const uploadResponse = await axios.post(`${APIEndPoint}/upload`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             const filePath = uploadResponse.data.filePath;
 
-            const analysisResponse = await axios.post('http://localhost:5000/analyze', { filePath });
+            const analysisResponse = await axios.post(`${APIEndPoint}/analyze`, { filePath });
             setAnalysis(analysisResponse.data);
         } catch (error) {
             console.error('Error uploading/analyzing file', error);
