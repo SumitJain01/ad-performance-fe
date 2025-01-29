@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { FaHeart } from 'react-icons/fa';
 
-const APIEndPoint = "https://ad-performance-be.onrender.com";
+const APIEndPoint = true ? "https://f726-49-156-99-175.ngrok-free.app" : "https://ad-performance-be.onrender.com";
 
 const Container = styled.div`
     min-height: 100vh;
@@ -101,14 +101,13 @@ const App = () => {
     const uploadFile = async () => {
         const formData = new FormData();
         formData.append('file', file);
-
+        console.log("kkkkk",formData,file)
         try {
             setLoading(true);
             const uploadResponse = await axios.post(`${APIEndPoint}/upload`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             const filePath = uploadResponse.data.filePath;
-
             const analysisResponse = await axios.post(`${APIEndPoint}/analyze`, { filePath });
             setAnalysis(analysisResponse.data);
         } catch (error) {
@@ -158,3 +157,4 @@ const App = () => {
 };
 
 export default App;
+
